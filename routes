@@ -1,5 +1,5 @@
 const { createCustomer } = require('./controllers/customerController');
-const authMiddleware = require('./middlewares.js/authMiddleware');
+const authMiddleware = require('./middlewares/authMiddleware');
 const router = require('express').Router();
 
 router.post('/createCustomer', authMiddleware, createCustomer);

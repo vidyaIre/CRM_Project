@@ -4,12 +4,12 @@ const customerModel = require('../models/customerModel');
 module.exports = {
     createCustomer: (req, res) => {
         try {
-            const { name, email, phone } = req.body;
-            console.log(name, email, phone);
+            const { name, email,location, phone } = req.body;
+            console.log(name, email,location, phone);
 
-            if (name && email && phone) {
+            if (name && email && location && phone) {
                 const newCustomer = new customerModel({
-                    name, email, phone
+                    name, email, location, phone
                 });
                 newCustomer.save()
                     .then((response) => {
