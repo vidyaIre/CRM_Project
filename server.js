@@ -1,14 +1,18 @@
 const express = require('express');
 const router = require('./routes');
+const connectDB = require('./dbConfig');
 const app = express();
+
 require('dotenv').config();
+//console.log(process.env);
+//console.log(process.env.MONGODB_STRING_URI);
 
-const dbConfig = require('./dbConfig');
+//const dbConfig = require('./dbConfig');
 
-
+connectDB();
 
 app.use(express.json());
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
 
 app.use('/api', router);
 

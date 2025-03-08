@@ -3,6 +3,6 @@ const authMiddleware = require('./middlewares/authMiddleware');
 const router = require('express').Router();
 
 router.post('/createCustomer', authMiddleware, createCustomer);
-//router.get('/ getAllCustomers', authMiddleware,  getAllCustomers);
+router.get('/getAllCustomers', authMiddleware, getAllCustomers);
 
 module.exports = router;
