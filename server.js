@@ -17,11 +17,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/api', router);
 
 
-// app.get('/', (req, res) => {
-//     res.send('Welcome to the API');
-// });
-
-
 
 const PORT = process.env.PORT;
 app.listen(PORT, () => {
