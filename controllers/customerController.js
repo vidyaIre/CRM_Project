@@ -110,14 +110,16 @@ module.exports = {
             //console.log(customerId);
             if (customerId) {
                 customerModel.updateOne(
-                    { _id: customerId},
-                    {$set:{
-                        isDeleted: true
-                    }}
-                ).then((response) =>{
-                    if (response?.modifiedCount != 0){
+                    { _id: customerId },
+                    {
+                        $set: {
+                            isDeleted: true
+                        }
+                    }
+                ).then((response) => {
+                    if (response?.modifiedCount != 0) {
                         return res.status(200).json({
-                            success:true,
+                            success: true,
                             statuscode: 200,
                             message: "Customer soft-deleted successfully"
                         });
@@ -129,13 +131,13 @@ module.exports = {
                         });
                     }
 
-                }).catch(error =>{
+                }).catch(error => {
                     return res.status(400).json({
                         success: false,
                         statuscode: 400,
                         message: "Customer soft-deletion failed!",
                         data: error
-                    }); 
+                    });
                 })
             } else {
                 return res.status(400).json({
@@ -153,38 +155,38 @@ module.exports = {
             })
         }
     },
-    hardDeleteCustomer:(req, res) => {
+    hardDeleteCustomer: (req, res) => {
         //console.log("hi");
-        try{
+        try {
             const { customerId } = req.body;
-                //console.log(customerId);
-                if(customerId){
-                    const response = customerModel.deleteOne({
-                         _id:customerId
+            //console.log(customerId);
+            if (customerId) {
+                const response = customerModel.deleteOne({
+                    _id: customerId
+                });
+                if (response.deletedCount != 0) {
+                    return res.status(200).json({
+                        success: true,
+                        statusCode: 200,
+                        message: "Customer deleted successfully....."
                     });
-                    if(response.deletedCount != 0){
-                        return res.status(200).json({
-                            success: true,
-                            statusCode: 200,
-                            message: "Customer deleted successfully....."
-                        });
-                    } else {
-                        return res.status(200).json({
-                            success: false,
-                            statusCode: 400,
-                            message: "customer deleted failed!!!!"
-                        });
-                    }
-
-                } else{
+                } else {
                     return res.status(200).json({
                         success: false,
                         statusCode: 400,
-                        message: "Missing required fields"
+                        message: "customer deleted failed!!!!"
                     });
                 }
-            
-        } catch (error){
+
+            } else {
+                return res.status(200).json({
+                    success: false,
+                    statusCode: 400,
+                    message: "Missing required fields"
+                });
+            }
+
+        } catch (error) {
             return res.status(500).json({
                 success: false,
                 statusCode: 500,
