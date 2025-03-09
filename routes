@@ -1,4 +1,4 @@
-const { createCustomer, getAllCustomers, updateCustomer ,softDeleteCustomer} = require('./controllers/customerController');
+const { createCustomer, getAllCustomers, updateCustomer , softDeleteCustomer, hardDeleteCustomer} = require('./controllers/customerController');
 const authMiddleware = require('./middlewares/authMiddleware');
 const router = require('express').Router();
 
@@ -6,6 +6,7 @@ router.post('/createCustomer', authMiddleware, createCustomer);
 router.get('/getAllCustomers', authMiddleware, getAllCustomers);
 router.put('/updateCustomer', authMiddleware,updateCustomer);
 router.delete('/softDeleteCustomer', authMiddleware, softDeleteCustomer);
+router.delete('/hardDeleteCustomer', authMiddleware, hardDeleteCustomer);
 
 
 module.exports = router;

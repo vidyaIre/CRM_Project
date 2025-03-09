@@ -152,5 +152,45 @@ module.exports = {
                 data: error.message
             })
         }
+    },
+    hardDeleteCustomer:(req, res) => {
+        //console.log("hi");
+        try{
+            const { customerId } = req.body;
+                //console.log(customerId);
+                if(customerId){
+                    const response = customerModel.deleteOne({
+                         _id:customerId
+                    });
+                    if(response.deletedCount != 0){
+                        return res.status(200).json({
+                            success: true,
+                            statusCode: 200,
+                            message: "Customer deleted successfully....."
+                        });
+                    } else {
+                        return res.status(200).json({
+                            success: false,
+                            statusCode: 400,
+                            message: "customer deleted failed!!!!"
+                        });
+                    }
+
+                } else{
+                    return res.status(200).json({
+                        success: false,
+                        statusCode: 400,
+                        message: "Missing required fields"
+                    });
+                }
+            
+        } catch (error){
+            return res.status(500).json({
+                success: false,
+                statusCode: 500,
+                message: "Internal server error!",
+                data: error.message
+            });
+        }
     }
 };
