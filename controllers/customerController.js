@@ -40,6 +40,7 @@ module.exports = {
         }
     },
     getAllCustomers: async (req, res) => {
+
         try {
             const customers = await customerModel.find({ isDeleted: false });
             //console.log(customers);
@@ -194,5 +195,36 @@ module.exports = {
                 data: error.message
             });
         }
+    },
+    getPageCustomer: async (req, res) => {
+        //console.log("hi");
+
+
+        try {
+            let { page, limit } = req.body;
+            page = parseInt(page) || 1;
+            limit = parseInt(limit) || 2;
+            const skip = (page - 1) * limit;
+
+            const totalCustomers = await customerModel.countDocuments();
+            const customers = await customerModel.find()
+            .skip(skip)
+            .limit(limit);
+
+           return res.status(200).json({
+                success: true,
+                totalPages: Math.ceil(totalCustomers/limit),
+                currentPage: page,
+                data: customers
+
+            });
+        } catch (error) {
+            res.status(500).json({ 
+                message: 'SERVER ERROR:',
+                data: error.message
+             });
+        }
     }
+
+
 };
