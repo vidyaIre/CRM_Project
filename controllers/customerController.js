@@ -14,9 +14,9 @@ module.exports = {
                 });
                 const response = await newCustomer.save();
                 //console.log("Customer created:", response);
-                return res.status(200).json({
+                return res.status(201).json({
                     success: true,
-                    statusCode: 200,
+                    statusCode: 201,
                     message: "Customer created successfully.....",
                     data: response
                 });
@@ -66,7 +66,7 @@ module.exports = {
             const { customerId, updatedData } = req.body;
             //console.log(req.body);
             if (customerId) {
-                console.log("hi");
+                //console.log("hi");
                 customerModel.updateOne(
                     { _id: customerId },
                     updatedData
@@ -80,7 +80,7 @@ module.exports = {
                     })
                 }).catch((error) => {
                     console.log("error is:", error);
-                    return res.status(200).json({
+                    return res.status(400).json({
                         success: false,
                         statusCode: 400,
                         message: "Customer updation failed!",
@@ -88,9 +88,9 @@ module.exports = {
                     });
                 })
             } else {
-                return res.status(200).json({
+                return res.status(404).json({
                     success: false,
-                    statusCode: 400,
+                    statusCode: 404,
                     message: "missing required fields"
                 });
 
@@ -125,9 +125,9 @@ module.exports = {
                             message: "Customer soft-deleted successfully"
                         });
                     } else {
-                        return res.status(400).json({
+                        return res.status(404).json({
                             success: false,
-                            statuscode: 400,
+                            statuscode: 404,
                             message: "Customer soft-deletion faced a problem",
                         });
                     }
@@ -141,10 +141,10 @@ module.exports = {
                     });
                 })
             } else {
-                return res.status(400).json({
+                return res.status(404).json({
                     success: false,
-                    statusCode: 400,
-                    message: "Customer soft - deletion failed!!!!"
+                    statusCode: 404,
+                    message: "Customer not found"
                 });
             }
         } catch (error) {
@@ -172,7 +172,7 @@ module.exports = {
                         message: "Customer deleted successfully....."
                     });
                 } else {
-                    return res.status(200).json({
+                    return res.status(400).json({
                         success: false,
                         statusCode: 400,
                         message: "customer deleted failed!!!!"
@@ -180,9 +180,9 @@ module.exports = {
                 }
 
             } else {
-                return res.status(200).json({
+                return res.status(404).json({
                     success: false,
-                    statusCode: 400,
+                    statusCode: 404,
                     message: "Missing required fields"
                 });
             }
@@ -213,6 +213,7 @@ module.exports = {
 
            return res.status(200).json({
                 success: true,
+                statusCode: 200,
                 totalPages: Math.ceil(totalCustomers/limit),
                 currentPage: page,
                 data: customers
@@ -220,6 +221,8 @@ module.exports = {
             });
         } catch (error) {
             res.status(500).json({ 
+                success: false,
+                statusCode: 400,
                 message: 'SERVER ERROR:',
                 data: error.message
              });
